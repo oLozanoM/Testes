@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>card-caroussel</title>
+    <style>
+        body {
+            background: #ced7ea;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .Deck {
+            position: relative;
+            cursor : pointer;
+            height: 200px;
+            width: 150px;
+            object-fit: cover;       /* preenche sem distorcer */
+            object-position: top;   /* foca no topo (onde fica o rosto) */
+            display: block;          /* remove espaço extra embaixo da imagem */
+        }
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #030506;
+            color: #ced7ea;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font: sans-serif;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.6s cubic-bezier(0.75, -0.5, 0.27, 1.55);
+            transform-origin: bottom center;
+            overflow: hidden;
+        }
+
+        .Deck:hover .c1{
+            transform: rotate(-30deg) translate(-100px, -20px);
+           
+        }
+        .Deck:hover .c2{
+            transform: rotate(-15deg) translate(-50px, -10px);
+        }
+        .Deck:hover .c3{
+            transform: rotate(0deg) translate(0px, -20px);
+        }
+        .Deck:hover .c4{
+            transform: rotate(15deg) translate(50px, -10px);
+        }
+        .Deck:hover .c5{
+            transform: rotate(30deg) translate(100px, -20px);
+        }
+        .card:hover {
+            background: #12151a !important;
+            color: white !important;
+            z-index: 10 !important;
+        }
+
+        </style>
+</head>
+<body>
+    <div class="Deck">
+    <div class=" card c1" style="z-index: 1;">
+        <img src="img/ichika.jpg"  width="100%" height="100%"></div>
+    <div class=" card c2" style="z-index: 2;">
+        <img src="img/nino.webp"  width="100%" height="100%"></div>
+    <div class=" card c3" style="z-index: 3;">
+        <img src="img/miku.jpg"  width="100%" height="100%"></div>
+    <div class=" card c4" style="z-index: 2;">
+        <img src="img/yotsuba.jpg"  width="100%" height="100%"></div>
+    <div class=" card c5" style="z-index: 1;">
+        <img src="img/itsuki.jpg"  width="100%" height="100%"></div>
+</div>
+
+   <script>
+
+let email = localStorage.getItem("email");
+let senha = localStorage.getItem("senha");
+
+let resultado = document.getElementById("resultado");
+
+// dados corretos
+let emailCorreto = "admin@gmail.com";
+let senhaCorreta = "123456";
+
+if(email == emailCorreto && senha == senhaCorreta){
+
+    resultado.innerHTML = "Login correto ✅";
+
+}else{
+
+    resultado.innerHTML = "Email ou senha incorretos ❌";
+
+}
+
+</script>
+</body>
+</html>
