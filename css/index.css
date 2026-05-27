@@ -10,7 +10,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 min-height: 100vh;
-background-image: url('C:\\Users\\llmar\\Downloads\\Nova pasta\\img\\Daigo sakura_0007.jpg');
+background-image: url("../img/Daigo sakura_0007.jpg");
 background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
