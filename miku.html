@@ -1,653 +1,1078 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Miku Nakano</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Miku Nakano</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    :root {
-      --blue-dark: #0a1628;
-      --blue-mid: #112240;
-      --blue-accent: #378add;
-      --blue-light: #85b7eb;
-      --blue-pale: #e6f1fb;
-      --text-muted: rgba(180,210,244,0.6);
-    }
+      :root {
+        --blue-dark: #0a1628;
+        --blue-mid: #112240;
+        --blue-accent: #378add;
+        --blue-light: #85b7eb;
+        --blue-pale: #e6f1fb;
+        --text-muted: rgba(180, 210, 244, 0.6);
+      }
 
-    body { overflow-x: hidden; }
+      body {
+        overflow-x: hidden;
+      }
 
-    .miku-page {
-      font-family: sans-serif;
-      background: var(--blue-dark);
-      color: #e6f1fb;
-    }
+      .miku-page {
+        font-family: sans-serif;
+        background: var(--blue-dark);
+        color: #e6f1fb;
+      }
 
-    /* ── NAVBAR ── */
-    .fnav {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      display: inline-flex;
-      align-items: center;
-      background: rgba(10,22,40,0.6);
-      border: 0.5px solid rgba(55,138,221,0.25);
-      border-radius: 999px;
-      padding: 5px;
-      gap: 2px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      white-space: nowrap;
-    }
+      /* ── NAVBAR ── */
+      .fnav {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        display: inline-flex;
+        align-items: center;
+        background: rgba(10, 22, 40, 0.6);
+        border: 0.5px solid rgba(55, 138, 221, 0.25);
+        border-radius: 999px;
+        padding: 5px;
+        gap: 2px;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        white-space: nowrap;
+      }
 
-    .fnav-pill {
-      position: absolute;
-      height: calc(100% - 10px);
-      top: 5px;
-      border-radius: 999px;
-      background: rgba(0,230,255,0.15);
-      border: 1px solid rgba(0,230,255,0.5);
-      box-shadow: 0 0 14px rgba(0,230,255,0.35), inset 0 0 10px rgba(0,230,255,0.1);
-      transition: left 0.35s cubic-bezier(0.4,0,0.2,1), width 0.35s cubic-bezier(0.4,0,0.2,1);
-      pointer-events: none;
-    }
+      .fnav-pill {
+        position: absolute;
+        height: calc(100% - 10px);
+        top: 5px;
+        border-radius: 999px;
+        background: rgba(0, 230, 255, 0.15);
+        border: 1px solid rgba(0, 230, 255, 0.5);
+        box-shadow:
+          0 0 14px rgba(0, 230, 255, 0.35),
+          inset 0 0 10px rgba(0, 230, 255, 0.1);
+        transition:
+          left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+          width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+      }
 
-    .fnav-item {
-      font-size: 13px;
-      color: rgba(255,255,255,0.45);
-      padding: 7px 18px;
-      border-radius: 999px;
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      z-index: 1;
-      white-space: nowrap;
-      position: relative;
-      transition: color 0.2s;
-    }
-    .fnav-item:hover { color: rgba(255,255,255,0.8); }
-    .fnav-item.active { color: #00e6ff; text-shadow: 0 0 10px rgba(0,230,255,0.6); }
+      .fnav-item {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.45);
+        padding: 7px 18px;
+        border-radius: 999px;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        z-index: 1;
+        white-space: nowrap;
+        position: relative;
+        transition: color 0.2s;
+      }
+      .fnav-item:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .fnav-item.active {
+        color: #00e6ff;
+        text-shadow: 0 0 10px rgba(0, 230, 255, 0.6);
+      }
 
-    /* ── DROPDOWN ── */
-    .drop-wrap {
-      position: relative;
-      z-index: 200;
-    }
+      /* ── DROPDOWN ── */
+      .drop-wrap {
+        position: relative;
+        z-index: 200;
+      }
 
-    .drop-btn {
-      font-size: 13px;
-      color: rgba(255,255,255,0.45);
-      padding: 7px 18px;
-      border-radius: 999px;
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: color 0.2s;
-    }
-    .drop-btn:hover { color: rgba(255,255,255,0.8); }
-    .drop-btn i { font-size: 12px; transition: transform 0.25s; }
-    .drop-wrap.open .drop-btn i { transform: rotate(180deg); }
+      .drop-btn {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.45);
+        padding: 7px 18px;
+        border-radius: 999px;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: color 0.2s;
+      }
+      .drop-btn:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .drop-btn i {
+        font-size: 12px;
+        transition: transform 0.25s;
+      }
+      .drop-wrap.open .drop-btn i {
+        transform: rotate(180deg);
+      }
 
-    .dropdown {
-      position: absolute;
-      top: calc(100% + 12px);
-      left: 50%;
-      transform: translateX(-50%) translateY(-6px);
-      background: rgba(10,22,40,0.92);
-      backdrop-filter: blur(20px);
-      border: 0.5px solid rgba(55,138,221,0.25);
-      border-radius: 16px;
-      padding: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      min-width: 190px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-    }
+      .dropdown {
+        position: absolute;
+        top: calc(100% + 12px);
+        left: 50%;
+        transform: translateX(-50%) translateY(-6px);
+        background: rgba(10, 22, 40, 0.92);
+        backdrop-filter: blur(20px);
+        border: 0.5px solid rgba(55, 138, 221, 0.25);
+        border-radius: 16px;
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 190px;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease;
+      }
 
-    .drop-wrap.open .dropdown {
-      opacity: 1;
-      pointer-events: all;
-      transform: translateX(-50%) translateY(0);
-    }
+      .drop-wrap.open .dropdown {
+        opacity: 1;
+        pointer-events: all;
+        transform: translateX(-50%) translateY(0);
+      }
 
-    .drop-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      color: rgba(255,255,255,0.6);
-      font-size: 13px;
-      text-decoration: none;
-      transition: background 0.15s, color 0.15s;
-      position: relative;
-    }
-    .drop-item:hover { background: rgba(55,138,221,0.1); color: #fff; }
+      .drop-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 13px;
+        text-decoration: none;
+        transition:
+          background 0.15s,
+          color 0.15s;
+        position: relative;
+      }
+      .drop-item:hover {
+        background: rgba(55, 138, 221, 0.1);
+        color: #fff;
+      }
 
-    .drop-avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 500;
-      flex-shrink: 0;
-    }
+      .drop-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 500;
+        flex-shrink: 0;
+      }
 
-    .drop-info { display: flex; flex-direction: column; line-height: 1.3; }
-    .drop-name { font-size: 13px; font-weight: 500; }
-    .drop-role { font-size: 11px; opacity: 0.5; }
-    .drop-divider { height: 0.5px; background: rgba(55,138,221,0.15); margin: 4px 0; }
+      .drop-info {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.3;
+      }
+      .drop-name {
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .drop-role {
+        font-size: 11px;
+        opacity: 0.5;
+      }
+      .drop-divider {
+        height: 0.5px;
+        background: rgba(55, 138, 221, 0.15);
+        margin: 4px 0;
+      }
 
-    .dir-arrow { margin-left: auto; font-size: 11px; opacity: 0.3; color: #fff; }
-    .drop-item[data-dir="left"]  .dir-arrow::after { content: "←"; }
-    .drop-item[data-dir="right"] .dir-arrow::after { content: "→"; }
-    .drop-item[data-dir="none"]  .dir-arrow::after { content: "•"; color: #00e6ff; opacity: 1; }
+      .dir-arrow {
+        margin-left: auto;
+        font-size: 11px;
+        opacity: 0.3;
+        color: #fff;
+      }
+      .drop-item[data-dir="left"] .dir-arrow::after {
+        content: "←";
+      }
+      .drop-item[data-dir="right"] .dir-arrow::after {
+        content: "→";
+      }
+      .drop-item[data-dir="none"] .dir-arrow::after {
+        content: "•";
+        color: #00e6ff;
+        opacity: 1;
+      }
 
-    /* ── EXIT OVERLAY ── */
-    .exit-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      pointer-events: none;
-      opacity: 0;
-      background: #0a1628;
-      transition: opacity 0.45s ease;
-    }
-    .exit-overlay.show { opacity: 1; pointer-events: all; }
+      /* ── EXIT OVERLAY ── */
+      .exit-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0;
+        background: #0a1628;
+        transition: opacity 0.45s ease;
+      }
+      .exit-overlay.show {
+        opacity: 1;
+        pointer-events: all;
+      }
 
-    /* ── PAGE SLIDE ANIMATIONS ── */
-    .page-transition {
-      animation-duration: 0.55s;
-      animation-fill-mode: forwards;
-      animation-timing-function: cubic-bezier(0.77,0,0.175,1);
-    }
+      /* ── PAGE SLIDE ANIMATIONS ── */
+      .page-transition {
+        animation-duration: 0.55s;
+        animation-fill-mode: forwards;
+        animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+      }
 
-    @keyframes slideOutLeft {
-      from { transform: translateX(0);     opacity: 1; filter: blur(0px); }
-      to   { transform: translateX(-120px); opacity: 0; filter: blur(8px); }
-    }
-    @keyframes slideOutRight {
-      from { transform: translateX(0);    opacity: 1; filter: blur(0px); }
-      to   { transform: translateX(120px); opacity: 0; filter: blur(8px); }
-    }
-    @keyframes slideInLeft {
-      from { transform: translateX(-120px); opacity: 0; filter: blur(8px); }
-      to   { transform: translateX(0);      opacity: 1; filter: blur(0px); }
-    }
-    @keyframes slideInRight {
-      from { transform: translateX(120px); opacity: 0; filter: blur(8px); }
-      to   { transform: translateX(0);     opacity: 1; filter: blur(0px); }
-    }
+      @keyframes slideOutLeft {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+          filter: blur(0px);
+        }
+        to {
+          transform: translateX(-120px);
+          opacity: 0;
+          filter: blur(8px);
+        }
+      }
+      @keyframes slideOutRight {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+          filter: blur(0px);
+        }
+        to {
+          transform: translateX(120px);
+          opacity: 0;
+          filter: blur(8px);
+        }
+      }
+      @keyframes slideInLeft {
+        from {
+          transform: translateX(-120px);
+          opacity: 0;
+          filter: blur(8px);
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+          filter: blur(0px);
+        }
+      }
+      @keyframes slideInRight {
+        from {
+          transform: translateX(120px);
+          opacity: 0;
+          filter: blur(8px);
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+          filter: blur(0px);
+        }
+      }
 
-    /* ── HERO ── */
-    .m-hero {
-      min-height: 520px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6rem 2rem 4rem;
-      position: relative;
-      background: radial-gradient(ellipse at 50% 80%, #0c2a4a 0%, #0a1628 65%);
-      border-bottom: 0.5px solid rgba(55,138,221,0.2);
-    }
+      /* ── HERO ── */
+      .m-hero {
+        min-height: 520px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 6rem 2rem 4rem;
+        position: relative;
+        background: radial-gradient(
+          ellipse at 50% 80%,
+          #0c2a4a 0%,
+          #0a1628 65%
+        );
+        border-bottom: 0.5px solid rgba(55, 138, 221, 0.2);
+      }
 
-    .m-tag {
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--blue-accent);
-      background: rgba(55,138,221,0.1);
-      border: 0.5px solid rgba(55,138,221,0.3);
-      border-radius: 99px;
-      padding: 4px 16px;
-      margin-bottom: 1.5rem;
-      display: inline-block;
-    }
+      .m-tag {
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--blue-accent);
+        background: rgba(55, 138, 221, 0.1);
+        border: 0.5px solid rgba(55, 138, 221, 0.3);
+        border-radius: 99px;
+        padding: 4px 16px;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+      }
 
-    .m-hero-num {
-      font-size: 120px;
-      font-weight: 500;
-      color: rgba(55,138,221,0.06);
-      line-height: 1;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      user-select: none;
-      letter-spacing: -8px;
-    }
+      .m-hero-num {
+        font-size: 120px;
+        font-weight: 500;
+        color: rgba(55, 138, 221, 0.06);
+        line-height: 1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        user-select: none;
+        letter-spacing: -8px;
+      }
 
-    .m-hero h1 {
-      position: relative;
-      font-size: 48px;
-      font-weight: 500;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-      color: #fff;
-    }
-    .m-hero h1 span { color: var(--blue-accent); }
+      .m-hero h1 {
+        position: relative;
+        font-size: 48px;
+        font-weight: 500;
+        line-height: 1.1;
+        margin-bottom: 1rem;
+        color: #fff;
+      }
+      .m-hero h1 span {
+        color: var(--blue-accent);
+      }
 
-    .m-hero p {
-      position: relative;
-      font-size: 16px;
-      color: var(--text-muted);
-      max-width: 400px;
-      line-height: 1.7;
-      margin-bottom: 2rem;
-    }
+      .m-hero p {
+        position: relative;
+        font-size: 16px;
+        color: var(--text-muted);
+        max-width: 400px;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+      }
 
-    .headphones { font-size: 48px; margin-bottom: 1rem; position: relative; }
+      .headphones {
+        font-size: 48px;
+        margin-bottom: 1rem;
+        position: relative;
+      }
 
-    .m-btn {
-      position: relative;
-      background: var(--blue-accent);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 28px;
-      font-size: 15px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .m-btn:hover { opacity: 0.8; }
+      .m-btn {
+        position: relative;
+        background: var(--blue-accent);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 28px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+      .m-btn:hover {
+        opacity: 0.8;
+      }
 
-    .m-btn-ghost {
-      position: relative;
-      background: transparent;
-      color: var(--blue-light);
-      border: 0.5px solid rgba(133,183,235,0.3);
-      border-radius: 8px;
-      padding: 10px 28px;
-      font-size: 15px;
-      cursor: pointer;
-      transition: border-color 0.2s;
-      margin-left: 10px;
-    }
-    .m-btn-ghost:hover { border-color: var(--blue-light); }
+      .m-btn-ghost {
+        position: relative;
+        background: transparent;
+        color: var(--blue-light);
+        border: 0.5px solid rgba(133, 183, 235, 0.3);
+        border-radius: 8px;
+        padding: 10px 28px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: border-color 0.2s;
+        margin-left: 10px;
+      }
+      .m-btn-ghost:hover {
+        border-color: var(--blue-light);
+      }
 
-    .scroll-hint {
-      margin-top: 2.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      opacity: 0.4;
-    }
-    .scroll-hint span { font-size: 11px; color: var(--blue-light); letter-spacing: 0.1em; }
-    .scroll-dot { width: 4px; height: 4px; background: var(--blue-light); border-radius: 50%; animation: bdot 1.4s infinite; }
-    .scroll-dot:nth-child(3) { animation-delay: 0.2s; }
-    .scroll-dot:nth-child(4) { animation-delay: 0.4s; }
-    @keyframes bdot {
-      0%,80%,100% { transform: translateY(0); opacity: 0.3; }
-      40% { transform: translateY(-5px); opacity: 1; }
-    }
+      .scroll-hint {
+        margin-top: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        opacity: 0.4;
+      }
+      .scroll-hint span {
+        font-size: 11px;
+        color: var(--blue-light);
+        letter-spacing: 0.1em;
+      }
+      .scroll-dot {
+        width: 4px;
+        height: 4px;
+        background: var(--blue-light);
+        border-radius: 50%;
+        animation: bdot 1.4s infinite;
+      }
+      .scroll-dot:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+      .scroll-dot:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      @keyframes bdot {
+        0%,
+        80%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.3;
+        }
+        40% {
+          transform: translateY(-5px);
+          opacity: 1;
+        }
+      }
 
-    /* ── SOBRE ── */
-    .m-label {
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--blue-accent);
-      margin-bottom: 0.5rem;
-    }
+      /* ── SOBRE ── */
+      .m-label {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--blue-accent);
+        margin-bottom: 0.5rem;
+      }
 
-    .m-sobre {
-      padding: 5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: var(--blue-mid);
-      border-bottom: 0.5px solid rgba(55,138,221,0.15);
-    }
-    .m-sobre h2 { font-size: 26px; font-weight: 500; margin-bottom: 2.5rem; color: #fff; }
+      .m-sobre {
+        padding: 5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: var(--blue-mid);
+        border-bottom: 0.5px solid rgba(55, 138, 221, 0.15);
+      }
+      .m-sobre h2 {
+        font-size: 26px;
+        font-weight: 500;
+        margin-bottom: 2.5rem;
+        color: #fff;
+      }
 
-    .m-info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-      width: 100%;
-      max-width: 680px;
-      margin-bottom: 2.5rem;
-    }
+      .m-info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        width: 100%;
+        max-width: 680px;
+        margin-bottom: 2.5rem;
+      }
 
-    .m-info-card {
-      background: rgba(55,138,221,0.06);
-      border: 0.5px solid rgba(55,138,221,0.2);
-      border-radius: 12px;
-      padding: 1.25rem;
-    }
-    .m-info-card .label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-accent); margin-bottom: 6px; }
-    .m-info-card .value { font-size: 15px; color: #e6f1fb; font-weight: 500; }
+      .m-info-card {
+        background: rgba(55, 138, 221, 0.06);
+        border: 0.5px solid rgba(55, 138, 221, 0.2);
+        border-radius: 12px;
+        padding: 1.25rem;
+      }
+      .m-info-card .label {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--blue-accent);
+        margin-bottom: 6px;
+      }
+      .m-info-card .value {
+        font-size: 15px;
+        color: #e6f1fb;
+        font-weight: 500;
+      }
 
-    .m-desc { max-width: 560px; font-size: 15px; color: var(--text-muted); line-height: 1.8; text-align: center; }
+      .m-desc {
+        max-width: 560px;
+        font-size: 15px;
+        color: var(--text-muted);
+        line-height: 1.8;
+        text-align: center;
+      }
 
-    /* ── GALERIA ── */
-    .m-galeria {
-      padding: 5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: var(--blue-dark);
-      border-bottom: 0.5px solid rgba(55,138,221,0.15);
-    }
-    .m-galeria h2 { font-size: 26px; font-weight: 500; margin-bottom: 0.5rem; color: #fff; }
-    .m-galeria > p { font-size: 14px; color: var(--text-muted); margin-bottom: 2.5rem; }
+      /* ── GALERIA ── */
+      .m-galeria {
+        padding: 5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: var(--blue-dark);
+        border-bottom: 0.5px solid rgba(55, 138, 221, 0.15);
+      }
+      .m-galeria h2 {
+        font-size: 26px;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: #fff;
+      }
+      .m-galeria > p {
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-bottom: 2.5rem;
+      }
 
-    .gal-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      width: 100%;
-      max-width: 680px;
-    }
+      .gal-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        width: 100%;
+        max-width: 680px;
+      }
 
-    .gal-item {
-      aspect-ratio: 3/4;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 0.5px solid rgba(55,138,221,0.2);
-      background: rgba(55,138,221,0.06);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform 0.3s ease, border-color 0.3s;
-    }
-    .gal-item:hover { transform: translateY(-4px); border-color: var(--blue-accent); }
-    .gal-item img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+      .gal-item {
+        aspect-ratio: 3/4;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 0.5px solid rgba(55, 138, 221, 0.2);
+        background: rgba(55, 138, 221, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition:
+          transform 0.3s ease,
+          border-color 0.3s;
+      }
+      .gal-item:hover {
+        transform: translateY(-4px);
+        border-color: var(--blue-accent);
+      }
+      .gal-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+        display: block;
+      }
 
-    .gal-placeholder { display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(55,138,221,0.4); }
-    .gal-placeholder i { font-size: 28px; }
-    .gal-placeholder span { font-size: 11px; }
+      .gal-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: rgba(55, 138, 221, 0.4);
+      }
+      .gal-placeholder i {
+        font-size: 28px;
+      }
+      .gal-placeholder span {
+        font-size: 11px;
+      }
 
-    /* ── QUOTES ── */
-    .m-quotes {
-      padding: 5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: var(--blue-mid);
-    }
-    .m-quotes h2 { font-size: 26px; font-weight: 500; margin-bottom: 0.5rem; color: #fff; }
-    .m-quotes > p { font-size: 14px; color: var(--text-muted); margin-bottom: 2.5rem; }
+      /* ── QUOTES ── */
+      .m-quotes {
+        padding: 5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: var(--blue-mid);
+      }
+      .m-quotes h2 {
+        font-size: 26px;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: #fff;
+      }
+      .m-quotes > p {
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-bottom: 2.5rem;
+      }
 
-    .quotes-list { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 560px; }
+      .quotes-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+        max-width: 560px;
+      }
 
-    .quote-item {
-      background: rgba(55,138,221,0.06);
-      border: 0.5px solid rgba(55,138,221,0.2);
-      border-left: 3px solid var(--blue-accent);
-      border-radius: 0 12px 12px 0;
-      padding: 1.25rem 1.5rem;
-    }
-    .quote-item p { font-size: 15px; color: #e6f1fb; line-height: 1.7; font-style: italic; margin-bottom: 8px; }
-    .quote-item span { font-size: 12px; color: var(--blue-accent); }
+      .quote-item {
+        background: rgba(55, 138, 221, 0.06);
+        border: 0.5px solid rgba(55, 138, 221, 0.2);
+        border-left: 3px solid var(--blue-accent);
+        border-radius: 0 12px 12px 0;
+        padding: 1.25rem 1.5rem;
+      }
+      .quote-item p {
+        font-size: 15px;
+        color: #e6f1fb;
+        line-height: 1.7;
+        font-style: italic;
+        margin-bottom: 8px;
+      }
+      .quote-item span {
+        font-size: 12px;
+        color: var(--blue-accent);
+      }
 
-    /* ── CTA ── */
-    .m-cta {
-      padding: 4rem 2rem;
-      text-align: center;
-      background: radial-gradient(ellipse at 50% 50%, #0c2a4a 0%, #0a1628 70%);
-      border-top: 0.5px solid rgba(55,138,221,0.2);
-    }
-    .m-cta h2 { font-size: 28px; font-weight: 500; color: #fff; margin-bottom: 0.75rem; }
-    .m-cta p { font-size: 15px; color: var(--text-muted); margin-bottom: 1.5rem; }
+      /* ── CTA ── */
+      .m-cta {
+        padding: 4rem 2rem;
+        text-align: center;
+        background: radial-gradient(
+          ellipse at 50% 50%,
+          #0c2a4a 0%,
+          #0a1628 70%
+        );
+        border-top: 0.5px solid rgba(55, 138, 221, 0.2);
+      }
+      .m-cta h2 {
+        font-size: 28px;
+        font-weight: 500;
+        color: #fff;
+        margin-bottom: 0.75rem;
+      }
+      .m-cta p {
+        font-size: 15px;
+        color: var(--text-muted);
+        margin-bottom: 1.5rem;
+      }
 
-    /* ── FOOTER ── */
-    .m-footer {
-      background: #060e1a;
-      padding: 1.5rem 2rem;
-      text-align: center;
-      border-top: 0.5px solid rgba(55,138,221,0.1);
-    }
-    .m-footer p { font-size: 12px; color: rgba(133,183,235,0.25); }
-  </style>
-</head>
-<body>
+      /* ── FOOTER ── */
+      .m-footer {
+        background: #060e1a;
+        padding: 1.5rem 2rem;
+        text-align: center;
+        border-top: 0.5px solid rgba(55, 138, 221, 0.1);
+      }
+      .m-footer p {
+        font-size: 12px;
+        color: rgba(133, 183, 235, 0.25);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="exit-overlay" id="exitOverlay"></div>
 
-<div class="exit-overlay" id="exitOverlay"></div>
+    <div
+      class="miku-page page-transition"
+      id="page"
+      style="animation-name: slideInRight"
+    >
+      <!-- NAVBAR -->
+      <nav class="fnav" id="fnav">
+        <div class="fnav-pill" id="pill"></div>
 
-<div class="miku-page page-transition" id="page" style="animation-name: slideInRight;">
+        <button
+          class="fnav-item active"
+          onclick="
+            movePill(this);
+            document
+              .getElementById('top')
+              .scrollIntoView({ behavior: 'smooth' });
+          "
+        >
+          Início
+        </button>
+        <button
+          class="fnav-item"
+          onclick="
+            movePill(this);
+            document
+              .getElementById('sobre')
+              .scrollIntoView({ behavior: 'smooth' });
+          "
+        >
+          Perfil
+        </button>
+        <button
+          class="fnav-item"
+          onclick="
+            movePill(this);
+            document
+              .getElementById('galeria')
+              .scrollIntoView({ behavior: 'smooth' });
+          "
+        >
+          Galeria
+        </button>
+        <button
+          class="fnav-item"
+          onclick="
+            movePill(this);
+            document
+              .getElementById('quotes')
+              .scrollIntoView({ behavior: 'smooth' });
+          "
+        >
+          Frases
+        </button>
 
-  <!-- NAVBAR -->
-  <nav class="fnav" id="fnav">
-    <div class="fnav-pill" id="pill"></div>
+        <div class="drop-wrap" id="dropWrap">
+          <button class="drop-btn" onclick="toggleDrop()">
+            Irmãs <i class="ti ti-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div class="dropdown">
+            <a
+              class="drop-item"
+              data-url="ichika.html"
+              data-dir="left"
+              onclick="
+                exitTo(this);
+                return false;
+              "
+              href="#"
+            >
+              <div
+                class="drop-avatar"
+                style="background: rgba(232, 180, 140, 0.2); color: #e8b48c"
+              >
+                一
+              </div>
+              <div class="drop-info">
+                <span class="drop-name">Ichika</span
+                ><span class="drop-role">a atriz</span>
+              </div>
+              <span class="dir-arrow"></span>
+            </a>
 
-    <button class="fnav-item active"
-      onclick="movePill(this); document.getElementById('top').scrollIntoView({behavior:'smooth'})">
-      Início
-    </button>
-    <button class="fnav-item"
-      onclick="movePill(this); document.getElementById('sobre').scrollIntoView({behavior:'smooth'})">
-      Perfil
-    </button>
-    <button class="fnav-item"
-      onclick="movePill(this); document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">
-      Galeria
-    </button>
-    <button class="fnav-item"
-      onclick="movePill(this); document.getElementById('quotes').scrollIntoView({behavior:'smooth'})">
-      Frases
-    </button>
+            <a
+              class="drop-item"
+              data-url="nino.html"
+              data-dir="left"
+              onclick="
+                exitTo(this);
+                return false;
+              "
+              href="#"
+            >
+              <div
+                class="drop-avatar"
+                style="background: rgba(244, 160, 196, 0.2); color: #f4a0c4"
+              >
+                二
+              </div>
+              <div class="drop-info">
+                <span class="drop-name">Nino</span
+                ><span class="drop-role">a cozinheira</span>
+              </div>
+              <span class="dir-arrow"></span>
+            </a>
 
-    <div class="drop-wrap" id="dropWrap">
-      <button class="drop-btn" onclick="toggleDrop()">
-        Irmãs <i class="ti ti-chevron-down" aria-hidden="true"></i>
-      </button>
-      <div class="dropdown">
+            <div class="drop-divider"></div>
 
-        <a class="drop-item" data-url="ichika.html" data-dir="left" onclick="exitTo(this); return false;" href="#">
-          <div class="drop-avatar" style="background:rgba(232,180,140,0.2); color:#e8b48c;">一</div>
-          <div class="drop-info"><span class="drop-name">Ichika</span><span class="drop-role">a atriz</span></div>
-          <span class="dir-arrow"></span>
-        </a>
+            <a
+              class="drop-item"
+              data-dir="none"
+              style="color: #00e6ff; cursor: default"
+            >
+              <div
+                class="drop-avatar"
+                style="background: rgba(0, 230, 255, 0.15); color: #00e6ff"
+              >
+                三
+              </div>
+              <div class="drop-info">
+                <span class="drop-name">Miku</span
+                ><span class="drop-role">você está aqui</span>
+              </div>
+              <span class="dir-arrow"></span>
+            </a>
 
-        <a class="drop-item" data-url="nino.html" data-dir="left" onclick="exitTo(this); return false;" href="#">
-          <div class="drop-avatar" style="background:rgba(244,160,196,0.2); color:#f4a0c4;">二</div>
-          <div class="drop-info"><span class="drop-name">Nino</span><span class="drop-role">a cozinheira</span></div>
-          <span class="dir-arrow"></span>
-        </a>
+            <div class="drop-divider"></div>
 
-        <div class="drop-divider"></div>
+            <a
+              class="drop-item"
+              data-url="yotsuba.html"
+              data-dir="right"
+              onclick="
+                exitTo(this);
+                return false;
+              "
+              href="#"
+            >
+              <div
+                class="drop-avatar"
+                style="background: rgba(160, 244, 160, 0.2); color: #a0f4a0"
+              >
+                四
+              </div>
+              <div class="drop-info">
+                <span class="drop-name">Yotsuba</span
+                ><span class="drop-role">a atleta</span>
+              </div>
+              <span class="dir-arrow"></span>
+            </a>
 
-        <a class="drop-item" data-dir="none" style="color:#00e6ff; cursor:default;">
-          <div class="drop-avatar" style="background:rgba(0,230,255,0.15); color:#00e6ff;">三</div>
-          <div class="drop-info"><span class="drop-name">Miku</span><span class="drop-role">você está aqui</span></div>
-          <span class="dir-arrow"></span>
-        </a>
+            <a
+              class="drop-item"
+              data-url="itsuki.html"
+              data-dir="right"
+              onclick="
+                exitTo(this);
+                return false;
+              "
+              href="#"
+            >
+              <div
+                class="drop-avatar"
+                style="background: rgba(244, 208, 160, 0.2); color: #f4d0a0"
+              >
+                五
+              </div>
+              <div class="drop-info">
+                <span class="drop-name">Itsuki</span
+                ><span class="drop-role">a estudiosa</span>
+              </div>
+              <span class="dir-arrow"></span>
+            </a>
+          </div>
+        </div>
+      </nav>
 
-        <div class="drop-divider"></div>
+      <section class="m-hero" id="top">
+        <div class="m-hero-num">三</div>
+        <div class="m-tag">quintupla #3 · azul · história</div>
+        <div class="headphones">🎧</div>
+        <h1>Miku<br /><span>Nakano</span></h1>
+        <p>
+          Silenciosa por fora, apaixonada por dentro. A terceira irmã que
+          conquistou o coração de muitos.
+        </p>
+        <div>
+          <button
+            class="m-btn"
+            onclick="
+              document
+                .getElementById('sobre')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Conhecer a Miku
+          </button>
+          <button
+            class="m-btn-ghost"
+            onclick="
+              document
+                .getElementById('galeria')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Ver galeria
+          </button>
+        </div>
+        <div class="scroll-hint">
+          <span>scroll</span>
+          <div class="scroll-dot"></div>
+          <div class="scroll-dot"></div>
+          <div class="scroll-dot"></div>
+        </div>
+      </section>
 
-        <a class="drop-item" data-url="yotsuba.html" data-dir="right" onclick="exitTo(this); return false;" href="#">
-          <div class="drop-avatar" style="background:rgba(160,244,160,0.2); color:#a0f4a0;">四</div>
-          <div class="drop-info"><span class="drop-name">Yotsuba</span><span class="drop-role">a atleta</span></div>
-          <span class="dir-arrow"></span>
-        </a>
+      <!-- SOBRE -->
+      <section class="m-sobre" id="sobre">
+        <p class="m-label">perfil</p>
+        <h2>Quem é a Miku?</h2>
+        <div class="m-info-grid">
+          <div class="m-info-card">
+            <div class="label">posição</div>
+            <div class="value">3ª irmã</div>
+          </div>
+          <div class="m-info-card">
+            <div class="label">cor</div>
+            <div class="value">Azul</div>
+          </div>
+          <div class="m-info-card">
+            <div class="label">paixão</div>
+            <div class="value">História feudal</div>
+          </div>
+          <div class="m-info-card">
+            <div class="label">símbolo</div>
+            <div class="value">Headphones</div>
+          </div>
+        </div>
+        <p class="m-desc">
+          Miku é a mais quieta e introvertida das cinco irmãs. Apaixonada por
+          história japonesa do período feudal, ela é direta e honesta —
+          raramente esconde o que sente. Com o tempo, aprende a expressar seus
+          sentimentos de forma corajosa, tornando-se uma das personagens mais
+          amadurecidas da obra.
+        </p>
+      </section>
 
-        <a class="drop-item" data-url="itsuki.html" data-dir="right" onclick="exitTo(this); return false;" href="#">
-          <div class="drop-avatar" style="background:rgba(244,208,160,0.2); color:#f4d0a0;">五</div>
-          <div class="drop-info"><span class="drop-name">Itsuki</span><span class="drop-role">a estudiosa</span></div>
-          <span class="dir-arrow"></span>
-        </a>
+      <section class="m-galeria" id="galeria">
+        <p class="m-label">galeria</p>
+        <h2>Momentos da Miku</h2>
+        <p>Substitua pelas suas imagens favoritas</p>
+        <div class="gal-grid">
+          <div class="gal-item">
+            <img
+              src="img/miku9.png"
+              alt="Miku"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div class="gal-placeholder" style="display: none">
+              <i class="ti ti-photo"></i><span>miku9.png</span>
+            </div>
+          </div>
+          <div class="gal-item">
+            <img
+              src="img/Miku_Nakano.webp"
+              alt="Miku"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div class="gal-placeholder" style="display: none">
+              <i class="ti ti-photo"></i><span>Miku_Nakano.webp</span>
+            </div>
+          </div>
+          <div class="gal-item">
+            <img
+              src="img/3.jpg"
+              alt="Miku"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div class="gal-placeholder" style="display: none">
+              <i class="ti ti-photo"></i><span>miku9.png</span>
+            </div>
+          </div>
+        <div class="gal-item">
+  <img src="img/4.png" alt="Miku" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+  <div class="gal-placeholder" style="display:none;">
+    <i class="ti ti-photo"></i><span>4.png</span>
+  </div>
+</div>  
 
-      </div>
+<div class="gal-item">
+  <img src="img/5.jpg" alt="Miku" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+  <div class="gal-placeholder" style="display:none;">
+    <i class="ti ti-photo"></i><span>5.jpg</span>
+  </div>
+</div>   
+
+<div class="gal-item">
+  <img src="img/6.jpg" alt="Miku" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+  <div class="gal-placeholder" style="display:none;">
+    <i class="ti ti-photo"></i><span>6.jpg</span>
+  </div>
+</div>   
+      </section>
+
+      <section class="m-quotes" id="quotes">
+        <p class="m-label">frases</p>
+        <h2>Palavras da Miku</h2>
+        <p>Momentos marcantes da obra</p>
+        <div class="quotes-list">
+          <div class="quote-item">
+            <p>"Eu gosto de você. Mais do que minhas irmãs."</p>
+            <span>— Miku Nakano, cap. 40</span>
+          </div>
+          <div class="quote-item">
+            <p>
+              "Não preciso que você me escolha. Quero conquistar isso sozinha."
+            </p>
+            <span>— Miku Nakano</span>
+          </div>
+          <div class="quote-item">
+            <p>
+              "Esses fones são minha armadura. Mas com você, não preciso deles."
+            </p>
+            <span>— Miku Nakano</span>
+          </div>
+          <div class="quote-item">
+            <p>
+              "História não é só o passado. É o que nos moldou para chegar até
+              aqui."
+            </p>
+            <span>— Miku Nakano</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="m-cta">
+        <h2>Ela é a sua favorita?</h2>
+        <p>Volte e conheça as outras quatro irmãs também</p>
+        <button
+          class="m-btn"
+          onclick="exitTo({ dataset: { url: '3.html', dir: 'left' } })"
+        >
+          ← Voltar ao início
+        </button>
+      </section>
+
+      <footer class="m-footer">
+        <p>
+          Miku Nakano · As Quíntuplas Noivas — Negi Haruba · Fan page · Nenhum
+          conteúdo oficial
+        </p>
+      </footer>
     </div>
-  </nav>
+     <script src="js\SmoothScroll.js"></script>
+    <script>
+      const pill = document.getElementById("pill");
+      const nav = document.getElementById("fnav");
+      const dropWrap = document.getElementById("dropWrap");
+      const overlay = document.getElementById("exitOverlay");
 
-  <!-- HERO -->
-  <section class="m-hero" id="top">
-    <div class="m-hero-num">三</div>
-    <div class="m-tag">quintupla #3 · azul · história</div>
-    <div class="headphones">🎧</div>
-    <h1>Miku<br><span>Nakano</span></h1>
-    <p>Silenciosa por fora, apaixonada por dentro. A terceira irmã que conquistou o coração de muitos.</p>
-    <div>
-      <button class="m-btn" onclick="document.getElementById('sobre').scrollIntoView({behavior:'smooth'})">Conhecer a Miku</button>
-      <button class="m-btn-ghost" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">Ver galeria</button>
-    </div>
-    <div class="scroll-hint">
-      <span>scroll</span>
-      <div class="scroll-dot"></div>
-      <div class="scroll-dot"></div>
-      <div class="scroll-dot"></div>
-    </div>
-  </section>
+      /* ── PILL ── */
+      function movePill(el) {
+        document.querySelectorAll(".fnav-item").forEach((i) => {
+          i.classList.remove("active");
+          i.style.color = "rgba(255,255,255,0.45)";
+          i.style.textShadow = "none";
+        });
+        el.classList.add("active");
+        el.style.color = "#00e6ff";
+        el.style.textShadow = "0 0 10px rgba(0,230,255,0.6)";
+        const nr = nav.getBoundingClientRect();
+        const er = el.getBoundingClientRect();
+        pill.style.left = er.left - nr.left - 5 + "px";
+        pill.style.width = er.width + "px";
+      }
 
-  <!-- SOBRE -->
-  <section class="m-sobre" id="sobre">
-    <p class="m-label">perfil</p>
-    <h2>Quem é a Miku?</h2>
-    <div class="m-info-grid">
-      <div class="m-info-card"><div class="label">posição</div><div class="value">3ª irmã</div></div>
-      <div class="m-info-card"><div class="label">cor</div><div class="value">Azul</div></div>
-      <div class="m-info-card"><div class="label">paixão</div><div class="value">História feudal</div></div>
-      <div class="m-info-card"><div class="label">símbolo</div><div class="value">Headphones</div></div>
-    </div>
-    <p class="m-desc">
-      Miku é a mais quieta e introvertida das cinco irmãs. Apaixonada por história japonesa do período feudal, ela é direta e honesta — raramente esconde o que sente. Com o tempo, aprende a expressar seus sentimentos de forma corajosa, tornando-se uma das personagens mais amadurecidas da obra.
-    </p>
-  </section>
+      function initPill() {
+        const active = document.querySelector(".fnav-item.active");
+        if (!active) return;
+        active.style.color = "#00e6ff";
+        active.style.textShadow = "0 0 10px rgba(0,230,255,0.6)";
+        const nr = nav.getBoundingClientRect();
+        const er = active.getBoundingClientRect();
+        pill.style.transition = "none";
+        pill.style.left = er.left - nr.left - 5 + "px";
+        pill.style.width = er.width + "px";
+        setTimeout(() => {
+          pill.style.transition = "";
+        }, 50);
+      }
 
-  <!-- GALERIA -->
-  <section class="m-galeria" id="galeria">
-    <p class="m-label">galeria</p>
-    <h2>Momentos da Miku</h2>
-    <p>Substitua pelas suas imagens favoritas</p>
-    <div class="gal-grid">
-      <div class="gal-item">
-        <img src="img/miku9.png" alt="Miku" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="gal-placeholder" style="display:none;"><i class="ti ti-photo"></i><span>miku9.png</span></div>
-      </div>
-      <div class="gal-item">
-        <img src="img/Miku_Nakano.webp" alt="Miku" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="gal-placeholder" style="display:none;"><i class="ti ti-photo"></i><span>Miku_Nakano.webp</span></div>
-      </div>
-      <div class="gal-item"><div class="gal-placeholder"><i class="ti ti-photo-plus"></i><span>adicionar foto</span></div></div>
-      <div class="gal-item"><div class="gal-placeholder"><i class="ti ti-photo-plus"></i><span>adicionar foto</span></div></div>
-      <div class="gal-item"><div class="gal-placeholder"><i class="ti ti-photo-plus"></i><span>adicionar foto</span></div></div>
-      <div class="gal-item"><div class="gal-placeholder"><i class="ti ti-photo-plus"></i><span>adicionar foto</span></div></div>
-    </div>
-  </section>
+      initPill();
 
-  <!-- QUOTES -->
-  <section class="m-quotes" id="quotes">
-    <p class="m-label">frases</p>
-    <h2>Palavras da Miku</h2>
-    <p>Momentos marcantes da obra</p>
-    <div class="quotes-list">
-      <div class="quote-item">
-        <p>"Eu gosto de você. Mais do que minhas irmãs."</p>
-        <span>— Miku Nakano, cap. 40</span>
-      </div>
-      <div class="quote-item">
-        <p>"Não preciso que você me escolha. Quero conquistar isso sozinha."</p>
-        <span>— Miku Nakano</span>
-      </div>
-      <div class="quote-item">
-        <p>"Esses fones são minha armadura. Mas com você, não preciso deles."</p>
-        <span>— Miku Nakano</span>
-      </div>
-      <div class="quote-item">
-        <p>"História não é só o passado. É o que nos moldou para chegar até aqui."</p>
-        <span>— Miku Nakano</span>
-      </div>
-    </div>
-  </section>
+      function toggleDrop() {
+        dropWrap.classList.toggle("open");
+      }
 
-  <!-- CTA -->
-  <section class="m-cta">
-    <h2>Ela é a sua favorita?</h2>
-    <p>Volte e conheça as outras quatro irmãs também</p>
-    <button class="m-btn" onclick="exitTo({dataset:{url:'index.html', dir:'left'}})">← Voltar ao início</button>
-  </section>
+      document.addEventListener("click", (e) => {
+        if (!dropWrap.contains(e.target)) dropWrap.classList.remove("open");
+      });
 
-  <footer class="m-footer">
-    <p>Miku Nakano · As Quíntuplas Noivas — Negi Haruba · Fan page · Nenhum conteúdo oficial</p>
-  </footer>
+      function exitTo(el) {
+        const url = el.dataset.url;
+        const dir = el.dataset.dir;
+        if (!url || dir === "none") return;
 
-</div><!-- fim .miku-page -->
+        const page = document.getElementById("page");
 
-<script>
-  const pill    = document.getElementById('pill');
-  const nav     = document.getElementById('fnav');
-  const dropWrap = document.getElementById('dropWrap');
-  const overlay  = document.getElementById('exitOverlay');
+        page.style.animationName =
+          dir === "left" ? "slideOutRight" : "slideOutLeft";
+        overlay.classList.add("show");
 
-  /* ── PILL ── */
-  function movePill(el) {
-    document.querySelectorAll('.fnav-item').forEach(i => {
-      i.classList.remove('active');
-      i.style.color = 'rgba(255,255,255,0.45)';
-      i.style.textShadow = 'none';
-    });
-    el.classList.add('active');
-    el.style.color = '#00e6ff';
-    el.style.textShadow = '0 0 10px rgba(0,230,255,0.6)';
-    const nr = nav.getBoundingClientRect();
-    const er = el.getBoundingClientRect();
-    pill.style.left  = (er.left - nr.left - 5) + 'px';
-    pill.style.width = er.width + 'px';
-  }
-
-  function initPill() {
-    const active = document.querySelector('.fnav-item.active');
-    if (!active) return;
-    active.style.color = '#00e6ff';
-    active.style.textShadow = '0 0 10px rgba(0,230,255,0.6)';
-    const nr = nav.getBoundingClientRect();
-    const er = active.getBoundingClientRect();
-    pill.style.transition = 'none';
-    pill.style.left  = (er.left - nr.left - 5) + 'px';
-    pill.style.width = er.width + 'px';
-    setTimeout(() => { pill.style.transition = ''; }, 50);
-  }
-
-  initPill();
-
-  /* ── DROPDOWN ── */
-  function toggleDrop() { dropWrap.classList.toggle('open'); }
-
-  document.addEventListener('click', e => {
-    if (!dropWrap.contains(e.target)) dropWrap.classList.remove('open');
-  });
-
-  /* ── PAGE TRANSITION ── */
-  function exitTo(el) {
-    const url = el.dataset.url;
-    const dir = el.dataset.dir;
-    if (!url || dir === 'none') return;
-
-    const page = document.getElementById('page');
-
-   page.style.animationName = dir === 'left' ? 'slideOutRight' : 'slideOutLeft';
-    overlay.classList.add('show');
-
-    setTimeout(() => {
-      window.location.href = url;
-    }, 520);
-  }
-</script>
-
-</body>
+        setTimeout(() => {
+          window.location.href = url;
+        }, 520);
+      }
+    </script>
+  </body>
 </html>

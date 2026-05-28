@@ -518,8 +518,9 @@ body-wrap { display: block; }
   </footer>
 
 </div>
-
+ <script src="js\SmoothScroll.js"></script>
 <script>
+  
  const deck = document.getElementById('deck');
 const cards = deck.querySelectorAll('.card');
 const nameLabel = document.getElementById('card-name');
@@ -543,4 +544,5 @@ cards.forEach(card => {
 deck.addEventListener('mouseleave', () => {
   nameLabel.style.opacity = '0';
 });
+
 </script>
