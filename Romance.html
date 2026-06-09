@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AnimeRomance — Verificar Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+         :root {
+            --pink: #d4537e;
+            --pink-light: #fbeaf0;
+            --pink-dark: #4b1528;
+            --coral: #d85a30;
+            --purple: #7f77dd;
+            --text: #2c2c2a;
+            --muted: #888780;
+            --bg: #fdf7f4;
+            --white: #ffffff;
+            --card-r: 14px;
+        }
+        
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        /* ── NAVBAR ── */
+        .fnav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--white);
+        border-bottom: 1px solid #f0e8e3;
+        padding: 8px 2.5rem;
+        gap: 4px;
+        position: sticky;
+        top: 0;
+        z-index: 9;
+        width: 100%;
+        }
+
+        .fnav-pill {
+        position: absolute;
+        height: 36px;
+        border-radius: 100px;
+        background: var(--pink-light);
+        border: none;
+        transition: left 0.4s cubic-bezier(0.4,0,0.2,1),
+                    width 0.4s cubic-bezier(0.4,0,0.2,1);
+        pointer-events: none;
+        }
+
+        .fnav-item {
+        font-size: 13px;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 500;
+        color: var(--muted);
+        padding: 8px 18px;
+        border-radius: 100px;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        z-index: 1;
+        white-space: nowrap;
+        position: relative;
+        transition: color 0.2s;
+        }
+        .fnav-item:hover { color: var(--pink); }
+        .fnav-item.active {
+        color: var(--pink);
+        font-weight: 600;
+        }
+
+        /* remove margin-top do header */
+        header { margin-top: 0; }
+        /* HEADER */
+        
+        header {
+            padding: 1.25rem 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #f0e8e3;
+            background: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--pink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .logo-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+        
+        .logo-text {
+            font-family: "Noto Serif JP", serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-text span {
+            color: var(--pink);
+        }
+        /* HERO */
+        
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+        }
+        
+        .hero-tag {
+            display: inline-block;
+            background: var(--pink-light);
+            color: var(--pink);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 100px;
+            margin-bottom: 1rem;
+        }
+        
+        .hero h1 {
+            font-family: "Noto Serif JP", serif;
+            font-size: clamp(26px, 4vw, 42px);
+            font-weight: 700;
+            line-height: 1.2;
+            max-width: 520px;
+            margin: 0 auto 0.75rem;
+        }
+        
+        .hero h1 em {
+            font-style: normal;
+            color: var(--pink);
+        }
+        
+        .hero p {
+            color: var(--muted);
+            font-size: 15px;
+            font-weight: 300;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        /* GRID */
+        
+        .grid-section {
+            padding: 2rem 2.5rem 4rem;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+        
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            padding-left: 2px;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+        
+        @media (max-width: 900px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 520px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .grid-section {
+                padding: 1.5rem 1rem 3rem;
+            }
+        }
+        /* CARD */
+        
+        .card {
+            border-radius: var(--card-r);
+            overflow: hidden;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            /* ripple base */
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 16px 36px rgba(212, 83, 126, 0.2);
+        }
+        
+        .card:active {
+            transform: translateY(-3px) scale(0.98);
+        }
+        /* ripple effect */
+        
+        .card .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(212, 83, 126, 0.25);
+            transform: scale(0);
+            animation: rippleAnim 0.5s linear;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        @keyframes rippleAnim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        /* Poster */
+        
+        .card-poster {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 2/3;
+            overflow: hidden;
+            background: #e8dde4;
+            flex-shrink: 0;
+        }
+        
+        .card-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            transition: transform 0.45s ease;
+        }
+        
+        .card:hover .card-poster img {
+            transform: scale(1.06);
+        }
+        
+        .card-poster::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient( to top, rgba(20, 10, 18, 0.82) 0%, rgba(20, 10, 18, 0.2) 45%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .poster-genre {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(212, 83, 126, 0.88);
+            backdrop-filter: blur(6px);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 4px 9px;
+            border-radius: 100px;
+            z-index: 2;
+        }
+        
+        .poster-rating {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(6px);
+            color: #ffd166;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 8px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        .poster-rating svg {
+            width: 11px;
+            height: 11px;
+            fill: #ffd166;
+        }
+        /* "Ver mais" hint that appears on hover */
+        
+        .poster-hint {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        
+        .card:hover .poster-hint {
+            opacity: 1;
+        }
+        
+        .poster-hint span {
+            background: var(--pink);
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 100px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 16px rgba(212, 83, 126, 0.5);
+        }
+        
+        .poster-overlay-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            padding: 12px 14px 14px;
+        }
+        
+        .poster-overlay-title h3 {
+            font-family: "Noto Serif JP", serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: white;
+            line-height: 1.3;
+            margin-bottom: 2px;
+        }
+        
+        .poster-overlay-title span {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.55);
+        }
+        
+        .card-body {
+            padding: 12px 14px 14px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .card-desc {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.55;
+            font-weight: 300;
+            flex: 1;
+        }
+        
+        .card-ep {
+            font-size: 11px;
+            color: var(--muted);
+            padding-top: 8px;
+            border-top: 1px solid #f0e8e3;
+            margin-top: auto;
+        }
+        /* OVERLAY / MODAL */
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.35s ease;
+        }
+        
+        .overlay.show {
+            display: flex;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .modal {
+            background: rgba(20, 15, 25, 0.93);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem 2.5rem 2rem;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            color: white;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .modal-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            font-size: 26px;
+        }
+        
+        .modal-icon.success {
+            background: rgba(212, 83, 126, 0.25);
+        }
+        
+        .modal-icon.error {
+            background: rgba(216, 90, 48, 0.25);
+        }
+        
+        .modal h2 {
+            font-family: "Noto Serif JP", serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+        
+        .modal p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+            margin-bottom: 1.75rem;
+            font-weight: 300;
+        }
+        
+        .modal-btn {
+            display: inline-block;
+            background: var(--pink);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.15s;
+            letter-spacing: 0.3px;
+        }
+        
+        .modal-btn:hover {
+            background: #bf3e6a;
+            transform: scale(1.03);
+        }
+        
+        .modal-link {
+            display: block;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: color 0.2s;
+        }
+        
+        .modal-link:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .modal-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 1.25rem 0;
+        }
+        /* PETALS */
+        
+        .petals {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .petal {
+            position: absolute;
+            top: -20px;
+            width: 8px;
+            height: 8px;
+            background: var(--pink);
+            border-radius: 0 50% 0 50%;
+            opacity: 0;
+            animation: fall linear infinite;
+        }
+        .vinyl-fixed {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 500;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        }
+
+        .vinyl-fixed img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        animation: vinylSpin 6s linear infinite;
+        animation-play-state: paused;
+        }
+
+        .vinyl-fixed img.playing {
+        animation-play-state: running;
+        }
+
+        @keyframes vinylSpin {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+        }
+
+        .vinyl-mute {
+        background: rgba(255,255,255,0.9);
+        border: 1px solid #f0e8e3;
+        border-radius: 99px;
+        padding: 3px 10px;
+        font-size: 11px;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transition: transform 0.15s;
+        }
+        .vinyl-mute:hover { transform: scale(1.05); 
+        }
+
+@keyframes vinylSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+            
+        }
+    </style>
+</head>
+<div class="vinyl-fixed" id="vinylFixed">
+  <img src="img/ps3.png" id="vinylCover" alt="capa">
+  <button class="vinyl-mute" id="muteBtn" onclick="toggleMute()">🔇</button>
+</div>
+
+<audio id="vinylAudio" loop volume="0,3">
+  <source src="musicas\Color Your Night_spotdown.org.mp3" type="audio/mpeg">
+</audio>
+<body>
+    <div class="petals" id="petals"></div>
+
+    <header>
+    <img src="img/matei.png" alt="logo" width="60" height="60">
+    <div class="logo-text">Snack<span>Night</span></div>
+    </header>
+    <nav class="fnav" id="fnav">
+  <div class="fnav-pill" id="pill"></div>
+  <button class="fnav-item" onclick="movePill(this); window.location.href='home.html'">Todos</button>
+  <button class="fnav-item active" onclick="movePill(this)">Romance</button>
+  <button class="fnav-item" onclick="movePill(this); window.location.href='acao.html'">Ação</button>
+  <button class="fnav-item" onclick="movePill(this); window.location.href='isekai.html'">Isekai</button>
+  <button class="fnav-item" onclick="movePill(this); window.location.href='cyberpunk.html'">Cyberpunk</button>
+  <button class="fnav-item" onclick="movePill(this); window.location.href='shonen.html'">Shonen</button>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-tag">✦ Catálogo Especial</div>
+        <h1>Os melhores animes<br />de <em>romance</em> para você</h1>
+        <p>
+            Histórias que fazem o coração acelerar. Escolha onde começar sua jornada.
+        </p>
+    </div>
+
+    <div class="grid-section">
+        <p class="section-label">Destaques da temporada</p>
+        <div class="cards-grid" id="cardsGrid"></div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="modal">
+            <div class="modal-icon" id="modalIcon"></div>
+            <h2 id="modalTitle"></h2>
+            <p id="modalMsg"></p>
+            <div class="modal-divider"></div>
+            <a href="#" class="modal-btn" id="modalBtn"></a>
+            <a href="index.html" class="modal-link">← Voltar para a tela de login</a
+        >
+      </div>
+    </div>
+
+    <script>
+      const animes = [
+        {
+          title: "As Quíntuplas",
+          genre: "Romance • Comédia",
+          desc: "Fuutarou Uesugi é contratado para dar aulas particulares a cinco irmãs gêmeas que possuem dificuldades nos estudos. Enquanto tenta ajudá-las, laços especiais começam a surgir.",
+          rating: "9.1",
+          eps: "24 eps + filme",
+          img: "img\\cat1.jpg",
+          slug: "quintuplas",
+        },
+        {
+          title: "Bunny Girl Senpai",
+          genre: "Romance • Drama • Sobrenatural",
+          desc: "Sakuta Azusagawa conhece Mai Sakurajima, uma atriz famosa que parece ter se tornado invisível para o mundo devido à misteriosa Síndrome da Puberdade.",
+          rating: "9.4",
+          eps: "13 eps + filmes",
+          img: "img\\cat2.webp",
+          slug: "bunnygirl",
+        },
+        {
+          title: "Your Lie in April",
+          genre: "Romance • Musical • Drama",
+          desc: "Após perder a capacidade de ouvir o próprio piano, Kousei Arima reencontra a paixão pela música graças à violinista Kaori Miyazono.",
+          rating: "9.0",
+          eps: "22 eps",
+          img: "img\\cat3.jpg",
+          slug: "yourlieinapril",
+        },
+        {
+          title: "My Dress-Up Darling",
+          genre: "Romance • Comédia • Escolar",
+          desc: "Wakana Gojo, um jovem apaixonado por bonecas tradicionais, acaba ajudando Marin Kitagawa em seus cosplays, aproximando os dois cada vez mais.",
+          rating: "8.7",
+          eps: "12 eps",
+          img: "img\\cat4.jpg",
+          slug: "dressupdarling",
+        },
+        {
+          title: "I Made Friends with the Second Prettiest Girl in My Class",
+          genre: "Romance • Escolar • Slice of Life",
+          desc: "A história acompanha Maehara e Umi Asanagi, a segunda garota mais popular da classe, enquanto desenvolvem uma amizade inesperada que pode se transformar em algo mais.",
+          rating: "8.6",
+          eps: "Em lançamento",
+          img: "img\\cat5.webp",
+          slug: "secondprettiest",
+        },
+        {
+          title: "Re:Zero",
+          genre: "Romance • Fantasia • Drama • Psicológico",
+          desc: "Subaru Natsuki é transportado para outro mundo e descobre que possui a habilidade de retornar no tempo após sua morte, enfrentando desafios cada vez mais difíceis.",
+          rating: "8.9",
+          eps: "66 eps",
+          img: "img\\cat5.avif",
+          slug: "rezero",
+        },
+        {
+          title: "Horimiya",
+          genre: "Romance • Slice of Life",
+          desc: "Kyoko Hori e Izumi Miyamura escondem lados completamente diferentes de suas personalidades, mas acabam se aproximando e construindo um relacionamento sincero.",
+          rating: "8.8",
+          eps: "13 eps + 13 eps",
+          img: "img\\cat7.webp",
+          slug: "horimiya",
+        },
+        {
+          title: "Sword Art Online",
+          genre: "Romance • Ação • Fantasia",
+          desc: "Kirito fica preso em um MMORPG de realidade virtual onde morrer no jogo significa morrer na vida real. Lá, ele conhece Asuna e enfrenta inúmeros desafios.",
+          rating: "9.2",
+          eps: "96 eps + filmes",
+          img: "img\\cat8.webp",
+          slug: "sao",
+        },
+      ];
+
+      const starSVG = `<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+
+      const grid = document.getElementById("cardsGrid");
+
+      animes.forEach((a) => {
+        grid.innerHTML += `
+          <a class="card" href="${a.slug}.html">
+            <div class="card-poster">
+              <img src="${a.img}" alt="${a.title}" loading="lazy" onerror="this.style.display='none'"/>
+              <div class="poster-genre">${a.genre.split("•")[0].trim()}</div>
+              <div class="poster-rating">${starSVG} ${a.rating}</div>
+              <div class="poster-hint"><span>Ver detalhes →</span></div>
+              <div class="poster-overlay-title">
+                <h3>${a.title}</h3>
+                <span>${a.eps}</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-desc">${a.desc}</div>
+            </div>
+          </a>`;
+      });
+
+      // Ripple effect
+      document.querySelectorAll(".card").forEach((card) => {
+        card.addEventListener("click", function (e) {
+          const ripple = document.createElement("span");
+          ripple.className = "ripple";
+          const size = Math.max(this.offsetWidth, this.offsetHeight);
+          const rect = this.getBoundingClientRect();
+          ripple.style.width = ripple.style.height = size + "px";
+          ripple.style.left = e.clientX - rect.left - size / 2 + "px";
+          ripple.style.top = e.clientY - rect.top - size / 2 + "px";
+          this.appendChild(ripple);
+          setTimeout(() => ripple.remove(), 500);
+        });
+      });
+
+      // Petals
+      const petalContainer = document.getElementById("petals");
+      for (let i = 0; i < 18; i++) {
+        const p = document.createElement("div");
+        p.className = "petal";
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.animationDuration = 6 + Math.random() * 8 + "s";
+        p.style.animationDelay = Math.random() * 10 + "s";
+        p.style.width = p.style.height = 5 + Math.random() * 7 + "px";
+        p.style.opacity = 0.3 + Math.random() * 0.4;
+        p.style.background = Math.random() > 0.5 ? "#D4537E" : "#f48fb1";
+        petalContainer.appendChild(p);
+      }
+
+      // Login Check
+      if (!sessionStorage.getItem("overlayDismissed")) {
+        const Username = localStorage.getItem("nome");
+        const Password = localStorage.getItem("senha");
+        const overlay = document.getElementById("overlay");
+        const icon = document.getElementById("modalIcon");
+        const title = document.getElementById("modalTitle");
+        const msg = document.getElementById("modalMsg");
+        const btn = document.getElementById("modalBtn");
+
+        if (Username === "Lucas Lozano" && Password === "LLmar123") {
+          icon.classList.add("success");
+          icon.textContent = "💖";
+          title.textContent = "Login feito com sucesso!";
+          msg.textContent = "Bem-vindo de volta, " + Username + "! Hora de escolher seu próximo anime favorito.";
+          btn.textContent = "Escolher agora →";
+          btn.href = "#";
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            sessionStorage.setItem("overlayDismissed", "1");
+            overlay.classList.remove("show");
+          });
+        } else {
+          icon.classList.add("error");
+          icon.textContent = "💔";
+          title.textContent = "Login incorreto";
+          msg.textContent = "Não encontramos esse usuário. Deseja continuar sem conta e navegar pelo catálogo?";
+          btn.textContent = "Continuar sem conta →";
+          btn.href = "3.html";
+        }
+        overlay.classList.add("show");
+      }
+        // ── NAVBAR ──
+        const pill = document.getElementById('pill');
+        const nav  = document.getElementById('fnav');
+
+        function movePill(el) {
+        const nr = nav.getBoundingClientRect();
+        const er = el.getBoundingClientRect();
+        pill.style.left  = (er.left - nr.left) + 'px';
+        pill.style.width = er.width + 'px';
+        }
+
+        (function initPill() {
+        const active = document.querySelector('.fnav-item.active');
+        if (!active) return;
+        active.style.color = '#f472a8';
+        active.style.textShadow = '0 0 10px rgba(212,83,126,0.6)';
+        const nr = nav.getBoundingClientRect();
+        const er = active.getBoundingClientRect();
+        pill.style.transition = 'none';
+        pill.style.left  = (er.left - nr.left) + 'px';
+        pill.style.width = er.width + 'px';
+        setTimeout(() => { pill.style.transition = ''; }, 50);
+        })();
+       const vinylAudio = document.getElementById('vinylAudio');
+        const vinylCover = document.getElementById('vinylCover');
+        const muteBtn    = document.getElementById('muteBtn');
+
+        vinylAudio.volume = 0.075; // volume baixinho
+
+        // toca assim que o usuário interagir pela primeira vez
+        document.addEventListener('click', () => {
+        vinylAudio.play();
+        vinylCover.classList.add('playing');
+        vinylAudio.muted = false;
+        muteBtn.textContent = '🔊';
+        }, { once: true });
+
+        function toggleMute() {
+        vinylAudio.muted = !vinylAudio.muted;
+        muteBtn.textContent = vinylAudio.muted ? '🔇' : '🔊';
+        vinylCover.classList.toggle('playing', !vinylAudio.muted);
+        }
+    </script>
+</body>
+
+</html>

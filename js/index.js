@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('login-form');
     const sumbitButton = document.getElementById('submit-btn');
-    
+
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         setTimeout(() => {
             alert(`Welcome, ${username}!`);
-        
-            submitButton.innerText= 'Sign In';
+
+            submitButton.innerText = 'Sign In';
             submitButton.disabled = false;
 
             loginForm.reset();

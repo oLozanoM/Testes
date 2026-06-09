@@ -1,113 +1,116 @@
 <!doctype html>
 <html lang="pt-br">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cadastro</title>
 
     <style>
-      body {
-        background: #0f1115;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        font-family: Arial;
-      }
-
-      .box {
-        background: #1b1f27;
-        padding: 30px;
-        border-radius: 15px;
-        width: 300px;
-      }
-
-      h2 {
-        color: white;
-        text-align: center;
-      }
-
-      input {
-        width: 100%;
-        padding: 12px;
-        margin-top: 10px;
-        border: none;
-        border-radius: 8px;
-      }
-
-      button {
-        width: 100%;
-        padding: 12px;
-        margin-top: 15px;
-        border: none;
-        border-radius: 8px;
-        background: #4c8bf5;
-        color: white;
-        cursor: pointer;
-      }
-
-      a {
-        color: #4c8bf5;
-      }
-
-      p {
-        color: white;
-        text-align: center;
-      }
+        body {
+            background: #0f1115;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial;
+        }
+        
+        .box {
+            background: #1b1f27;
+            padding: 30px;
+            border-radius: 15px;
+            width: 300px;
+        }
+        
+        h2 {
+            color: white;
+            text-align: center;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #4c8bf5;
+            color: white;
+            cursor: pointer;
+        }
+        
+        a {
+            color: #4c8bf5;
+        }
+        
+        p {
+            color: white;
+            text-align: center;
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="box">
-      <h2>Criar Conta</h2>
+        <h2>Criar Conta</h2>
 
-      <input type="text" id="Username" placeholder="Username" />
+        <input type="text" id="Username" placeholder="Username" />
 
-      <input type="password" id="Password" placeholder="Password" />
+        <input type="password" id="Password" placeholder="Password" />
 
-      <button id="btnCadastro">Cadastrar</button>
+        <button id="btnCadastro">Cadastrar</button>
 
-      <p>
-        Já possui conta?
-        <a href="index.html">Login</a>
-      </p>
+        <p>
+            Já possui conta?
+            <a href="index.html">Login</a>
+        </p>
     </div>
     <script src="js\SmoothScroll.js"></script>
     <script>
-      document
-        .getElementById("btnCadastro")
-        .addEventListener("click", function () {
-          let Username = document.getElementById("Username").value;
-          let Password = document.getElementById("Password").value;
+        document
+            .getElementById("btnCadastro")
+            .addEventListener("click", function() {
+                let Username = document.getElementById("Username").value;
+                let Password = document.getElementById("Password").value;
 
-          if (Username == "" || Password == "") {
-            alert("Preencha todos os campos!");
-            return;
-          }
+                if (Username == "" || Password == "") {
+                    alert("Preencha todos os campos!");
+                    return;
+                }
 
-          let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+                let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
-          let usuarioExiste = usuarios.find(
-            (usuario) => usuario.nome === Username,
-          );
+                let usuarioExiste = usuarios.find(
+                    (usuario) => usuario.nome === Username,
+                );
 
-          if (usuarioExiste) {
-            alert("Usuário já existe!");
-            return;
-          }
+                if (usuarioExiste) {
+                    alert("Usuário já existe!");
+                    return;
+                }
 
-          let novoUsuario = {
-            nome: Username,
-            senha: Password,
-          };
+                let novoUsuario = {
+                    nome: Username,
+                    senha: Password,
+                };
 
-          usuarios.push(novoUsuario);
+                usuarios.push(novoUsuario);
 
-          localStorage.setItem("usuarios", JSON.stringify(usuarios));
+                localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
-          alert("Conta criada com sucesso!");
+                alert("Conta criada com sucesso!");
 
-          window.location.href = "index.html";
-        });
+                window.location.href = "index.html";
+            });
     </script>
-  </body>
+</body>
+
 </html>
